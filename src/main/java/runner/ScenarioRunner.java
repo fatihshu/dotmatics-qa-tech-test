@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         glue={"steps"},
         tags="@technical-test",
         stepNotifications=false,
-        plugin = {"json:target/output.json"}
+        plugin = {"json:target/output.json",}
 )
 
 public class ScenarioRunner {

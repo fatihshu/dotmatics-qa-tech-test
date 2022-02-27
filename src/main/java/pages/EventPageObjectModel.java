@@ -1,14 +1,11 @@
 package pages;
 
-import Utilities.Driver;
-import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import steps.StepDefinitions;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,99 +13,71 @@ public class EventPageObjectModel {
 
     public EventPageObjectModel(){
 
-        PageFactory.initElements(Driver.get(), this);
+        PageFactory.initElements(StepDefinitions.get(), this);
     }
 
-    @FindBy(xpath = "//div[@class='js-toggle-btn-out']")
+    @FindBy(xpath = "//div[@class='events-filter-select']/div")
     public WebElement filterByButton;
-
-    @FindBy(xpath = "//ul[@class='js-toggle-block-out']/li")
-    public List<WebElement>sortedByAllEventsLinks;
 
     @FindBy(xpath = "//li[@class='_orange']")
     public WebElement sortedByIndustryEvent;
 
-    @FindBy(xpath = "//div[@class='l-news-item _orange ']")
-    public List<WebElement>selectIndustryEvents;
+    @FindBy(xpath = "//div[@class='l-news _list']/div")
+    public List<WebElement> selectIndustryEvents;
 
     @FindBy(xpath = "//li[@class='_dark-blue']")
     public WebElement sortedByOnline;
 
-    @FindBy(xpath = "(//h4)[3]")
+    @FindBy(partialLinkText = "SmartLab Digital 2022")
     public WebElement selectOnlineEvent;
 
-    @FindBy(xpath = "//h2")
-    public WebElement verifySelectedOnlineEvent;
 
-    @FindBy(xpath = "")
-    public WebElement datePrintforOnline;
+    @FindBy(xpath = "//ul[@class='info-row-about']/li")
+    public List<WebElement> dateTimeLink;
 
+
+    public static void clickWithJS(WebElement element) {
+        ((JavascriptExecutor) StepDefinitions.get())
+                .executeScript("arguments[0].click();", element);
+    }
 
     public void clickListGridCalender(String module) {
-        String moduleLink = " //i[@class='icon-" + module + "']";
-        try {
-            Driver.get().findElement(By.xpath(moduleLink.toLowerCase())).click();
-        } catch (Exception e) {
-            WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
-            wait.until(ExpectedConditions.elementToBeClickable(Driver.get().findElement(By.xpath(moduleLink.toLowerCase()))));
+        String element = " //i[@class='icon-" + module.trim().toLowerCase()+ "']";
+        WebElement girdListCalender=StepDefinitions.get().findElement(By.xpath(element));
+        clickWithJS(girdListCalender);
+
         }
-    }
 
-
-
-    public void filterByAllEvents(String option){
-      switch (option){
-
-            case "All":
-                sortedByAllEventsLinks.get(0).click();
+    public void clickSortByOption(String option){
+        switch (option.trim().toLowerCase()) {
+            case "industry event":
+                clickWithJS(sortedByIndustryEvent);
                 break;
-            case "Dotmatics Event":
-                sortedByAllEventsLinks.get(1).click();
-                break;
-            case "Industry Event":
-                sortedByAllEventsLinks.get(2).click();
-
-                break;
-            case "Online":
-                sortedByAllEventsLinks.get(3).click();
-                break;
-            case "Training":
-                sortedByAllEventsLinks.get(4).click();
+            case "online":
+                clickWithJS(sortedByOnline);
                 break;
         }
     }
 
 
+    public void clickSelectEvent(String option){
+        switch (option.trim().toLowerCase()) {
+            case "industry event list":
+                clickWithJS(selectIndustryEvents.get(4));
+              break;
+            case "online event list":
+                clickWithJS(selectOnlineEvent);
+                break;
+        }
+    }
 
 
-
-
-
-//    public  List<String> getFilterby() {
-//        List<String> elemTexts = new ArrayList<>();
-//        for (WebElement el :allEventsLinks ) {
-//            elemTexts.add(el.getText());
-//        }
-//        return elemTexts;
-//    }
-//
-
-//
-//    public void DateTimeforOnlineEvent(String onlineDateTime) {
-//        String onlineEventDateTime ="//i[@class='icon-"+onlineDateTime+"']";
-//        Driver.get().findElement(By.xpath(onlineEventDateTime.toLowerCase())).getText();
-//    }
-
-
-//public static List<String> displayedEventBy(String option) {
-//    if (option.equals("Online")) {
-//        String onliEventLists = "(//div[@class='l-news-tag'])[2]";
-//        Driver.get().findElement(By.xpath(onliEventLists)).getText();
-//    }
-//
-
+ public  List<String> printDateTime(List<WebElement>dateTimeLink) {
+     List<String> elemTexts = new ArrayList<>();
+     for (WebElement el : dateTimeLink) {
+         elemTexts.add(el.getText());
+     }
+     return elemTexts;
+ }
 }
-
-
-
 
