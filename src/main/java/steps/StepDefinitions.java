@@ -12,6 +12,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import pages.EventPageObjectModel;
+
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 
@@ -79,33 +81,57 @@ public class StepDefinitions extends EventPageObjectModel {
 
     clickListGridCalender(expectedModule);
     }
-
     @Then("I should filter Event by {string}")
     public void i_should_filter_event_by(String expectedBy)  {
 
        clickWithJS(filterByButton);
        clickSortByOption(expectedBy);
 
-
     }
 
     @Then("I should see a list of one or more events")
     public void i_should_see_a_list_of_one_or_more_events() {
 
+        String s  = "Gulfem";
+
+
+        System.out.println(Textrevers(s));
+
+
+        String ayni="mom";
+        System.out.println(isPolandirma(ayni));
+
+
+
+        int num=567;
+        int sum=0;
+        while (num>0){
+            sum=sum+num%10;
+        num=num/10;
+        }
+        System.out.println(sum);
+
+
+
+        int[]arry={4,59,99,54,75};
+        Arrays.sort(arry);
+        System.out.println(arry[arry.length-1]);
     }
 
     @Then("I should select first event seen in the Results")
-    public void i_should_select_first_event_seen_in_the_results()  {
+    public void i_should_select_first_event_seen_in_the_results() {
 
         clickSelectEvent("online event list");
-
-
     }
 
     @Then("I should print the Date and Time of this event")
     public void i_should_print_the_date_and_time_of_this_event()  {
 
-        System.out.println(printDateTime(dateTimeLink));
+        for (int i = 0; i < textOfListOfDateTime(dateTimeLink).size()-1; i++) {
+            System.out.println(textOfListOfDateTime(dateTimeLink).get(i));
+
+
+        }
 
     }
 

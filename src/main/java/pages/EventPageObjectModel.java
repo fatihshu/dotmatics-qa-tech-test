@@ -22,15 +22,14 @@ public class EventPageObjectModel {
     @FindBy(xpath = "//li[@class='_orange']")
     public WebElement sortedByIndustryEvent;
 
-    @FindBy(xpath = "//div[@class='l-news _list']/div")
-    public List<WebElement> selectIndustryEvents;
+    @FindBy(xpath = "//div[starts-with(@class,'l-news')]/div")
+    public WebElement selectIndustryEvents;
 
     @FindBy(xpath = "//li[@class='_dark-blue']")
     public WebElement sortedByOnline;
 
     @FindBy(partialLinkText = "SmartLab Digital 2022")
     public WebElement selectOnlineEvent;
-
 
     @FindBy(xpath = "//ul[@class='info-row-about']/li")
     public List<WebElement> dateTimeLink;
@@ -59,11 +58,10 @@ public class EventPageObjectModel {
         }
     }
 
-
-    public void clickSelectEvent(String option){
+    public void clickSelectEvent(String option)  {
         switch (option.trim().toLowerCase()) {
             case "industry event list":
-                clickWithJS(selectIndustryEvents.get(4));
+                clickWithJS(selectIndustryEvents);
               break;
             case "online event list":
                 clickWithJS(selectOnlineEvent);
@@ -71,13 +69,41 @@ public class EventPageObjectModel {
         }
     }
 
-
- public  List<String> printDateTime(List<WebElement>dateTimeLink) {
+ public  List<String> textOfListOfDateTime(List<WebElement>dateTimeLink) {
      List<String> elemTexts = new ArrayList<>();
      for (WebElement el : dateTimeLink) {
          elemTexts.add(el.getText());
      }
      return elemTexts;
  }
+
+
+ public static String verersText(String str){
+     String revers="";
+
+     for (int i = str.length()-1;i>=0;i--) {
+         revers=revers+str.charAt(i);
+     }
+     return revers;
+ }
+
+
+    public static String Textrevers(String name){
+    String reverse=new StringBuilder(name).reverse().toString();
+    return reverse;
+
 }
+    public static boolean isPolandirma(String str){
+
+        if(str == null)
+        return false;
+        StringBuilder sb = new StringBuilder(str);
+        return sb.reverse().toString().equals(str);
+    }
+        }
+
+
+
+
+
 
